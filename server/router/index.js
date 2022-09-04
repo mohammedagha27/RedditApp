@@ -5,11 +5,11 @@ const {
   logout,
   searchPost,
   getAllPosts,
-  getPostComment,
   postNewComment,
   addNewPost,
   deleteComment,
   deletePost,
+  getPostComments,
 } = require("../controller");
 const router = express.Router();
 
@@ -23,7 +23,7 @@ router.get("/posts", getAllPosts);
 router.post("/post", addNewPost);
 router.get("/delete-post/:id", deletePost);
 //comments
-router.get("/comments", getPostComment);
+router.get("/comments", getPostComments);
 router.post("/comment", postNewComment);
 router.get("/delete-comment/:id", deleteComment);
 

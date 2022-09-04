@@ -1,8 +1,9 @@
 const { compare } = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
 const { loginCheckQ } = require("../../database/queries");
 const generateToken = require("./generateToken");
-const loginValidation = require("./loginValidation");
+const loginValidation = require("../../validation/loginValidation");
 
 const login = (req, res) => {
   const { username, password } = req.body;
