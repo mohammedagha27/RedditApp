@@ -1,12 +1,8 @@
 const { hash } = require("bcryptjs");
-const {
-  getUserByEmailQ,
-  getUserByNameQ,
-  addNewUserQ,
-} = require("../../database/queries");
-const { checkNewUserData } = require("./checkNewUserData");
+
+const { addNewUserQ, checkNewUserDataQ } = require("../../database/queries");
+const { signupValidation } = require("../../validation");
 const generateToken = require("./generateToken");
-const signupValidation = require("./signupValidation");
 
 const signUp = (req, res) => {
   const { email, username, password, confirmPassword } = req.body;
@@ -17,7 +13,7 @@ const signUp = (req, res) => {
     res.send(validation.error.details);
   } else {
     //* check if the email or username is taken by another user
-    checkNewUserData(email, username).then((data) => {
+    checkNewUserDataQ(email, username).then((data) => {
       if (data.rowCount === 0) {
         hash(password, 10, (err, encoded) => {
           if (err) console.log(err);
