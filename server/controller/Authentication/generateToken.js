@@ -4,7 +4,7 @@ const generateToken = (req, res, data) => {
   sign(data, process.env.SECRET_KEY, { algorithm: "HS256" }, (err, encoded) => {
     if (err) console.log(err);
     else {
-      res.cookie("token", encoded).redirect("/");
+      res.cookie("token", encoded).send({ success: "User Logged" });
     }
   });
 };
