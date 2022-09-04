@@ -1,5 +1,4 @@
-const getUserByEmailQ = require("./getUserByEmailQ");
-const getUserByNameQ = require("./getUserByNameQ");
 const addNewUserQ = require("./addNewUserQ");
+const checkNewUserDataQ = require("./checkNewUserDataQ");
 
-module.exports = { getUserByEmailQ, getUserByNameQ, addNewUserQ };
+module.exports = { addNewUserQ, checkNewUserDataQ };

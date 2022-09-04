@@ -1,28 +1,41 @@
+const { hash } = require("bcryptjs");
 const {
   getUserByEmailQ,
   getUserByNameQ,
   addNewUserQ,
 } = require("../../database/queries");
-const checkNewUserEmail = require("./test");
+const { checkNewUserData } = require("./checkNewUserData");
+const signupValidation = require("./signupValidation");
 
 const signUp = (req, res) => {
   const { email, username, password, confirmPassword } = req.body;
-  res.send("");
-  getUserByEmailQ(email).then((data) => {
-    if (data.rowCount === 0) {
-      getUserByNameQ(username).then((result) => {
-        if (result.rowCount === 0) {
-          addNewUserQ({ email, username, password }).then((data) =>
-            res.json(data.rows)
-          );
-        } else {
-          res.json({ msg: "username already Exists" });
-        }
-      });
-    } else {
-      res.json({ msg: "Email Already Exists" });
-    }
-  });
+  //* validate the user inputs
+  const validation = signupValidation(req.body);
+
+  if (validation.error) {
+    res.send(validation.error.details);
+  } else {
+    //* check if the email or username is taken by another user
+    checkNewUserData(email, username).then((data) => {
+      if (data.rowCount === 0) {
+        hash(password, 10, (err, encoded) => {
+          if (err) console.log(err);
+          else {
+            addNewUserQ({ email, username, encoded }).then((data) => {
+              res.send(data.rows);
+            });
+          }
+        });
+      } else {
+        data.rows[0].email === email
+          ? res.send({ msg: "Email already Exist" })
+          : "";
+        data.rows[0].username === username
+          ? res.send({ msg: "username already Exist" })
+          : "";
+      }
+    });
+  }
 };
 
 module.exports = signUp;

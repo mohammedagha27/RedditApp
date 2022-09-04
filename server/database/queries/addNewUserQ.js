@@ -1,6 +1,6 @@
 const connection = require("../config/connection");
 
-const addNewUserQ = ({ email, username, password }) => {
+const addNewUserQ = ({ email, username, encoded }) => {
   return connection.query(
     `
   INSERT INTO
@@ -13,7 +13,7 @@ const addNewUserQ = ({ email, username, password }) => {
         $1,$2,$3
     ) RETURNING *;
   `,
-    [username, email, password]
+    [username, email, encoded]
   );
 };
 
