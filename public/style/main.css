@@ -1,0 +1,19 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+:root {
+  --headerBackground: #ffffff;
+  --bodyBackground: #dae0e6;
+  --button: #0079d3;
+  --border: #ccc;
+  --span: #787c7e;
+  --postHeader: #222;
+  --field: #f6f7f8;
+  --secColor: #ff4500;
+}
