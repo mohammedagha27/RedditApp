@@ -5,6 +5,7 @@ const {
   addNewUserQ,
 } = require("../../database/queries");
 const { checkNewUserData } = require("./checkNewUserData");
+const generateToken = require("./generateToken");
 const signupValidation = require("./signupValidation");
 
 const signUp = (req, res) => {
@@ -22,7 +23,8 @@ const signUp = (req, res) => {
           if (err) console.log(err);
           else {
             addNewUserQ({ email, username, encoded }).then((data) => {
-              res.send(data.rows);
+              const user = data.rows[0];
+              generateToken(req, res, user);
             });
           }
         });
