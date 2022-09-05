@@ -1,6 +1,6 @@
 const loginForm = document.querySelector("form#login");
 const signupForm = document.querySelector("form#signup");
-
+const headerMenu = document.querySelector("header .menu-options");
 signupForm.addEventListener("submit", (e) => {
   e.preventDefault();
   fetch("/signup", {
@@ -79,4 +79,31 @@ const shiftAuthPopup = (e) => {
 
 fetch("/getLoggedUserData")
   .then((data) => data.json())
-  .then(console.log);
+  .then((data) => {
+    if (!data.msg) {
+      headerMenu.textContent = "";
+      headerMenu.innerHTML = `<div class="menu" id="loggedUser">
+      <div class="loggedUser-actions">
+          <i class="fa-regular fa-share-from-square"></i>
+          <i class="fa-regular fa-comment"></i>
+          <i class="fa-regular fa-bell"></i>
+          <i class="fa-solid fa-plus"></i>
+      </div>
+      <div class="btns">
+          <button id="advertise"><i class="fa-solid fa-rectangle-ad"></i> Advertise</button>
+          <button id="shop-avatars">Shop Avatars</button>
+      </div>
+      <div class="menu-items">
+          <div class="user-img">
+              <img src="https://styles.redditmedia.com/t5_6zhglp/styles/profileIcon_snoo373b8fef-17fa-474c-882d-15f53e5ae3bd-headshot.png?width=256&height=256&crop=256:256,smart&s=8abaf96ecfbe41bdedf9b5a641c4bc79824cfa9c"
+                  alt="">
+          </div>
+          <div class="user-data">
+              <span class="user_name">mohammed_agha27</span>
+              <span class="karma"><i class="fa-solid fa-dharmachakra"></i> 1 karma</span>
+          </div>
+          <i class="fa-solid fa-angle-down"></i>
+      </div>
+  </div>`;
+    }
+  });
