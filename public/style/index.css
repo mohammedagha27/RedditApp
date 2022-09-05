@@ -105,14 +105,14 @@ header .header-container .menu .btns button:nth-child(1) {
   color: var(--button);
 }
 header .header-container .menu .btns button:nth-child(1):hover {
-    background-color: #0078d30a;
+  background-color: #0078d30a;
 }
 header .header-container .menu .btns button:nth-child(2) {
-    background-color: var(--button);
-    color: #fff;
+  background-color: var(--button);
+  color: #fff;
 }
 header .header-container .menu .btns button:nth-child(2):hover {
-    background-color: #0078d3e1;
+  background-color: #0078d3e1;
 }
 header .header-container .menu .menu-items {
   width: 70px;
@@ -129,4 +129,172 @@ header .header-container .menu .menu-items {
 }
 header .header-container .menu .menu-items:hover {
   border-color: var(--line);
+}
+
+.signup-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+.signup-popup.active {
+  display: flex;
+}
+.signup-popup .signup-container {
+  position: relative;
+  width: 850px;
+  height: 650px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0px -1px 11px 0px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0px -1px 11px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px -1px 11px 0px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.signup-popup .signup-container .signup-img {
+  width: 130px;
+  height: 100%;
+  background: url("https://www.redditstatic.com/accountmanager/bbb584033aa89e39bad69436c504c9bd.png");
+  background-size: cover;
+}
+.signup-popup .signup-container .signup-content {
+  height: 100%;
+  /* padding: 24px; */
+  margin-left: 24px;
+  display: flex;
+  width: 280px;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.signup-popup .signup-container .signup-content .signup-header h3 {
+  font-weight: 500;
+}
+.signup-popup .signup-container .signup-content .signup-header p {
+  margin-top: 1rem;
+  font-size: 12px;
+  padding-right: 20px;
+}
+.signup-popup .signup-container .signup-content .signup-sochial {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+.signup-popup .signup-container .signup-content .signup-sochial svg {
+  width: 18px;
+  position: absolute;
+  left: 7px;
+}
+.signup-popup .signup-container .signup-content .signup-sochial a {
+  width: 100%;
+  height: 42px;
+  position: relative;
+  border-radius: 100px;
+  border: 2px solid var(--line);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 7px;
+  text-decoration: none;
+  color: var(--postHeader);
+}
+.signup-popup .signup-container .signup-content .signup-sochial a {
+  width: 100%;
+  height: 42px;
+  position: relative;
+  border-radius: 100px;
+  border: 2px solid var(--line);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 7px;
+  text-decoration: none;
+  color: var(--postHeader);
+  transition: all 0.2s ease;
+}
+.signup-popup .signup-container .signup-content .signup-sochial a:hover {
+  background-color: #338fff11;
+}
+.signup-popup .signup-container .signup-content .divider {
+  width: 100%;
+  border-bottom: 2px solid var(--line);
+  position: relative;
+}
+.signup-popup .signup-container .signup-content .divider span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 5px;
+  color: var(--placeHolder);
+  font-weight: 500;
+}
+.signup-popup .signup-container .signup-content .signup-body form input {
+  width: 100%;
+  height: 48px;
+  background-color: #fcfcfb;
+  outline: none;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 0 10px;
+}
+.signup-popup .signup-container .signup-content .signup-body form input:focus {
+  border-color: var(--button);
+}
+.signup-popup .signup-container .signup-content .signup-body form button {
+  width: 100%;
+  height: 42px;
+  background-color: var(--button);
+  border: none;
+  color: #fff;
+  outline: none;
+  border-radius: 100px;
+  padding: 0 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.signup-popup .signup-container .signup-content .login-check {
+  font-size: 12px;
+}
+.signup-popup .signup-container .signup-content .login-check a {
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--button);
+  font-weight: 600;
+}
+
+.signup-close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  color: var(--span);
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 999999;
+}
+input.danger {
+  border-color: red !important;
+  color: red !important;
+}
+.input-box{
+  margin: 10px 0;
+}
+.input-box span {
+  color: red;
+  font-size: 14px;
+  padding: 0 5px;
 }
