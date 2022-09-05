@@ -309,3 +309,65 @@ input.danger {
   font-size: 14px;
   padding: 0 5px;
 }
+button#advertise {
+  background-color: #eee;
+  border: none;
+  color: #000;
+  font-size: 14px;
+  font-weight: 400;
+}
+button#shop-avatars {
+  background-color: #ff3cac;
+  background-image: linear-gradient(
+    225deg,
+    #ff3cac 0%,
+    #784ba0 50%,
+    #2b86c5 100%
+  );
+
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+}
+#loggedUser .menu-items {
+  width: 200px;
+  height: 95%;
+}
+#loggedUser .menu-items .user-img img {
+  width: 32px;
+}
+#loggedUser .menu-items .user-data {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+#loggedUser .menu-items .user-data {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1px;
+  flex-direction: column;
+  font-size: 12px;
+  padding-right: 25px;
+}
+#loggedUser .menu-items .user-data .user_name {
+  font-weight: 600;
+  color: var(--postHeader);
+}
+
+#loggedUser .menu-items .user-data .karma i {
+  color: var(--secColor);
+}
+.loggedUser-actions {
+  width: 200px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 20px;
+  font-weight: 300;
+  color: #555;
+}
