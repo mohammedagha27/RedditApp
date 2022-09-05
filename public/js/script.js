@@ -76,3 +76,7 @@ const shiftAuthPopup = (e) => {
   loginPop.classList.toggle("active");
   signUpPop.classList.toggle("active");
 };
+
+fetch("/getLoggedUserData")
+  .then((data) => data.json())
+  .then(console.log);

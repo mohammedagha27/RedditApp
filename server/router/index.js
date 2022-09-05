@@ -11,12 +11,15 @@ const {
   deletePost,
   getPostComments,
 } = require("../controller");
+const { getLoggedUserData } = require("../controller/Authentication");
+const { isLogged } = require("../middlewares");
 const router = express.Router();
 
 //Authentication
 router.post("/signup", signUp);
 router.post("/login", login);
 router.get("/logout", logout);
+router.get("/getLoggedUserData", isLogged, getLoggedUserData);
 //posts
 router.get("/search", searchPost);
 router.get("/posts", getAllPosts);
