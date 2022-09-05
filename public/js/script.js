@@ -49,6 +49,7 @@ const getFormInputs = (form) => {
   return data;
 };
 
+//? receive errors and show it below its input
 const handleErrors = (errors, type) => {
   let spans = document.querySelectorAll(`form#${type} .input-box span`);
   let inputs = document.querySelectorAll(`form#${type} .input-box input`);
@@ -71,18 +72,35 @@ const handleErrors = (errors, type) => {
     span.textContent = err.message;
   });
 };
+
+//? shift popups from signup pop => login pop or the opposite
 const shiftAuthPopup = (e) => {
   e.preventDefault();
   loginPop.classList.toggle("active");
   signUpPop.classList.toggle("active");
 };
 
+//? check if the user logged in to show the suitable header
 fetch("/getLoggedUserData")
   .then((data) => data.json())
   .then((data) => {
     if (!data.msg) {
-      headerMenu.textContent = "";
-      headerMenu.innerHTML = `<div class="menu" id="loggedUser">
+      shiftHederMenu(data);
+    }
+  })
+  .then((data) => {
+    let arrow = document.querySelector(".menu-items");
+    let logoutMenu = document.querySelector(".logout-menu");
+    arrow.addEventListener("click", (e) => {
+      logoutMenu.classList.toggle("active");
+    });
+  });
+
+//? take user data and show its name and img in the header
+const shiftHederMenu = (data) => {
+  headerMenu.textContent = "";
+  headerMenu.innerHTML = `
+      <div class="menu" id="loggedUser">
       <div class="loggedUser-actions">
           <i class="fa-regular fa-share-from-square"></i>
           <i class="fa-regular fa-comment"></i>
@@ -95,15 +113,26 @@ fetch("/getLoggedUserData")
       </div>
       <div class="menu-items">
           <div class="user-img">
-              <img src="https://styles.redditmedia.com/t5_6zhglp/styles/profileIcon_snoo373b8fef-17fa-474c-882d-15f53e5ae3bd-headshot.png?width=256&height=256&crop=256:256,smart&s=8abaf96ecfbe41bdedf9b5a641c4bc79824cfa9c"
+          <img src="${
+            data.img_url ||
+            "https://styles.redditmedia.com/t5_6zhglp/styles/profileIcon_snoo373b8fef-17fa-474c-882d-15f53e5ae3bd-headshot.png?width=256&height=256&crop=256:256,smart&s=8abaf96ecfbe41bdedf9b5a641c4bc79824cfa9c"
+          }"
                   alt="">
           </div>
           <div class="user-data">
-              <span class="user_name">mohammed_agha27</span>
+              <span class="user_name">${data.username}</span>
               <span class="karma"><i class="fa-solid fa-dharmachakra"></i> 1 karma</span>
+              </div>
+          <i class="fa-solid fa-angle-down" id="show-menu"></i>
+          <div class="logout-menu">
+              <a href="/logout">Logout</a>
           </div>
-          <i class="fa-solid fa-angle-down"></i>
-      </div>
-  </div>`;
-    }
-  });
+          </div>
+          </div>`;
+};
+
+const createNode = (tagName, classN) => {
+  let node = document.createElement(tagName);
+  node.className = classN;
+  return node;
+};

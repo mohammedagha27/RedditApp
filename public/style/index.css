@@ -10,7 +10,6 @@ header {
   top: 0;
   left: 0;
   z-index: 999;
-  overflow: hidden;
   background-color: var(--headerBackground);
 }
 .header-container {
@@ -331,6 +330,7 @@ button#shop-avatars {
   font-weight: 400;
 }
 #loggedUser .menu-items {
+  position: relative;
   width: 200px;
   height: 95%;
 }
@@ -370,4 +370,35 @@ button#shop-avatars {
   font-size: 20px;
   font-weight: 300;
   color: #555;
+}
+.logout-menu {
+  position: absolute;
+  left: 0;
+  background-color: var(--headerBackground);
+  width: 100%;
+  height: 45px;
+  bottom: -100%;
+  z-index: 99;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  display: none;
+}
+.logout-menu.active {
+  display: flex;
+}
+.logout-menu:hover {
+  background-color: var(--field);
+}
+
+.logout-menu a {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  width: 100%;
+  text-decoration: none;
+  color: var(--postHeader);
+  transition: all 0.4s ease;
+  font-size: 16px;
 }
