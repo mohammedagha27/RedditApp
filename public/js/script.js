@@ -71,3 +71,8 @@ const handleErrors = (errors, type) => {
     span.textContent = err.message;
   });
 };
+const shiftAuthPopup = (e) => {
+  e.preventDefault();
+  loginPop.classList.toggle("active");
+  signUpPop.classList.toggle("active");
+};
