@@ -15,7 +15,7 @@ const login = (req, res) => {
     //* serch if the user exists in the database
     loginCheckQ(username).then((data) => {
       if (data.rowCount === 0) {
-        res.send({ msg: "User not found" });
+        res.send([{ message: "User not found", path: ["username"] }]);
       } else {
         const user = data.rows[0];
         //* compare the returned user password with the input password
@@ -24,7 +24,7 @@ const login = (req, res) => {
           else {
             success
               ? generateToken(req, res, user)
-              : res.send({ msg: "wrong password" });
+              : res.send([{ message: "wrong Password", path: ["password"] }]);
           }
         });
       }

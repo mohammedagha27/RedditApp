@@ -26,10 +26,10 @@ const signUp = (req, res) => {
         });
       } else {
         data.rows[0].email === email
-          ? res.send({ msg: "Email already Exist" })
+          ? res.send([{ message: "Email already taken", path: ["email"] }])
           : "";
         data.rows[0].username === username
-          ? res.send({ msg: "username already Exist" })
+          ? res.send([{ message: "Username already taken", path: ["username"] }])
           : "";
       }
     });
