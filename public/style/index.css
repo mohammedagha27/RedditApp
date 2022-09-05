@@ -131,7 +131,8 @@ header .header-container .menu .menu-items:hover {
   border-color: var(--line);
 }
 
-.signup-popup {
+.signup-popup,
+.login-popup {
   position: fixed;
   top: 0;
   left: 0;
@@ -144,10 +145,12 @@ header .header-container .menu .menu-items:hover {
   align-items: center;
   display: none;
 }
-.signup-popup.active {
+.signup-popup.active,
+.login-popup.active {
   display: flex;
 }
-.signup-popup .signup-container {
+.signup-popup .signup-container,
+.login-popup .login-container {
   position: relative;
   width: 850px;
   height: 650px;
@@ -160,13 +163,15 @@ header .header-container .menu .menu-items:hover {
   justify-content: flex-start;
   align-items: center;
 }
-.signup-popup .signup-container .signup-img {
+.signup-popup .signup-container .signup-img,
+.login-popup .login-container .login-img {
   width: 130px;
   height: 100%;
   background: url("https://www.redditstatic.com/accountmanager/bbb584033aa89e39bad69436c504c9bd.png");
   background-size: cover;
 }
-.signup-popup .signup-container .signup-content {
+.signup-popup .signup-container .signup-content,
+.login-popup .login-container .login-content {
   height: 100%;
   /* padding: 24px; */
   margin-left: 24px;
@@ -176,40 +181,32 @@ header .header-container .menu .menu-items:hover {
   align-items: flex-start;
   flex-direction: column;
 }
-.signup-popup .signup-container .signup-content .signup-header h3 {
+.signup-popup .signup-container .signup-content .signup-header h3,
+.login-popup .login-container .login-content .login-header h3 {
   font-weight: 500;
 }
-.signup-popup .signup-container .signup-content .signup-header p {
+.signup-popup .signup-container .signup-content .signup-header p,
+.login-popup .login-container .login-content .login-header p {
   margin-top: 1rem;
   font-size: 12px;
   padding-right: 20px;
 }
-.signup-popup .signup-container .signup-content .signup-sochial {
+.signup-popup .signup-container .signup-content .signup-sochial,
+.login-popup .login-container .login-content .login-sochial {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
   width: 100%;
 }
-.signup-popup .signup-container .signup-content .signup-sochial svg {
+.signup-popup .signup-container .signup-content .signup-sochial svg,
+.login-popup .login-container .login-content .login-sochial svg {
   width: 18px;
   position: absolute;
   left: 7px;
 }
-.signup-popup .signup-container .signup-content .signup-sochial a {
-  width: 100%;
-  height: 42px;
-  position: relative;
-  border-radius: 100px;
-  border: 2px solid var(--line);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 7px;
-  text-decoration: none;
-  color: var(--postHeader);
-}
-.signup-popup .signup-container .signup-content .signup-sochial a {
+.signup-popup .signup-container .signup-content .signup-sochial a,
+.login-popup .login-container .login-content .login-sochial a {
   width: 100%;
   height: 42px;
   position: relative;
@@ -223,15 +220,19 @@ header .header-container .menu .menu-items:hover {
   color: var(--postHeader);
   transition: all 0.2s ease;
 }
-.signup-popup .signup-container .signup-content .signup-sochial a:hover {
+
+.signup-popup .signup-container .signup-content .signup-sochial a:hover,
+.login-popup .login-container .login-content .login-sochial a:hover {
   background-color: #338fff11;
 }
-.signup-popup .signup-container .signup-content .divider {
+.signup-popup .signup-container .signup-content .divider,
+.login-popup .login-container .login-content .divider {
   width: 100%;
   border-bottom: 2px solid var(--line);
   position: relative;
 }
-.signup-popup .signup-container .signup-content .divider span {
+.signup-popup .signup-container .signup-content .divider span,
+.login-popup .login-container .login-content .divider span {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -241,7 +242,12 @@ header .header-container .menu .menu-items:hover {
   color: var(--placeHolder);
   font-weight: 500;
 }
-.signup-popup .signup-container .signup-content .signup-body form input {
+.login-body,
+.signup-body {
+  width: 100%;
+}
+.signup-popup .signup-container .signup-content .signup-body form input,
+.login-popup .login-container .login-content .login-body form input {
   width: 100%;
   height: 48px;
   background-color: #fcfcfb;
@@ -250,10 +256,12 @@ header .header-container .menu .menu-items:hover {
   border-radius: 4px;
   padding: 0 10px;
 }
-.signup-popup .signup-container .signup-content .signup-body form input:focus {
+.signup-popup .signup-container .signup-content .signup-body form input:focus,
+.login-popup .login-container .login-content .login-body form input:focus {
   border-color: var(--button);
 }
-.signup-popup .signup-container .signup-content .signup-body form button {
+.signup-popup .signup-container .signup-content .signup-body form button,
+.login-popup .login-container .login-content .login-body form button {
   width: 100%;
   height: 42px;
   background-color: var(--button);
@@ -267,17 +275,20 @@ header .header-container .menu .menu-items:hover {
   font-weight: 600;
   cursor: pointer;
 }
-.signup-popup .signup-container .signup-content .login-check {
+.signup-popup .signup-container .signup-content .login-check,
+.login-popup .login-container .login-content .login-check {
   font-size: 12px;
 }
-.signup-popup .signup-container .signup-content .login-check a {
+.signup-popup .signup-container .signup-content .login-check a,
+.login-popup .login-container .login-content .login-check a {
   font-size: 14px;
   text-decoration: none;
   color: var(--button);
   font-weight: 600;
 }
 
-.signup-close {
+.signup-close,
+.login-close {
   position: absolute;
   right: 15px;
   top: 10px;
@@ -290,7 +301,7 @@ input.danger {
   border-color: red !important;
   color: red !important;
 }
-.input-box{
+.input-box {
   margin: 10px 0;
 }
 .input-box span {
