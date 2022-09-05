@@ -11,7 +11,13 @@ signupForm.addEventListener("submit", (e) => {
     body: JSON.stringify(getFormInputs(e.target)),
   })
     .then((data) => data.json())
-    .then(console.log);
+    .then((res) => {
+      if (res.success) {
+        window.location.href = "/";
+      } else {
+        handleErrors(res, "signup");
+      }
+    });
 });
 
 loginForm.addEventListener("submit", (e) => {
@@ -24,7 +30,13 @@ loginForm.addEventListener("submit", (e) => {
     body: JSON.stringify(getFormInputs(e.target)),
   })
     .then((data) => data.json())
-    .then(console.log);
+    .then((res) => {
+      if (res.success) {
+        window.location.href = "/";
+      } else {
+        handleErrors(res, "login");
+      }
+    });
 });
 
 //? receive a form and return an object contain all the form inputs and its value
@@ -35,4 +47,27 @@ const getFormInputs = (form) => {
     data[input.name] = input.value;
   });
   return data;
+};
+
+const handleErrors = (errors, type) => {
+  let spans = document.querySelectorAll(`form#${type} .input-box span`);
+  let inputs = document.querySelectorAll(`form#${type} .input-box input`);
+
+  //* delete the old errors
+  spans.forEach((s) => {
+    s.textContent = "";
+  });
+  inputs.forEach((input) => {
+    input.classList.remove("danger");
+  });
+
+  //* add new errors to the dom
+  errors.forEach((err) => {
+    let input = document.querySelector(
+      `form#${type} .input-box input[name='${err.path[0]}']`
+    );
+    let span = input.parentElement.querySelector("span");
+    input.classList.add("danger");
+    span.textContent = err.message;
+  });
 };
