@@ -1,0 +1,132 @@
+body {
+  padding-top: 50px;
+  background-color: var(--bodyBackground);
+  height: 1000px;
+}
+header {
+  width: 100%;
+  height: 49px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  overflow: hidden;
+  background-color: var(--headerBackground);
+}
+.header-container {
+  padding: 0 20px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+header .logo a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 8px;
+}
+header .logo a svg:nth-child(1) {
+  width: 32px;
+  height: 32px;
+}
+header .logo a svg:nth-child(2) {
+  width: 57px;
+  height: 18px;
+}
+header .header-container .search {
+  width: 656px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 15px;
+}
+header .header-container .search form {
+  width: 656px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: var(--field);
+  border: 1px solid var(--line);
+}
+header .header-container .search form:hover {
+  border-color: var(--button);
+}
+header .header-container .search form input {
+  width: 594px;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: lighter;
+}
+header .header-container .search form input::placeholder {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--placeHolder);
+}
+header .header-container .search form label {
+  width: 44px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--placeHolder);
+  font-size: 18px;
+}
+header .header-container .menu {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header .header-container .menu .btns button {
+  width: 120px;
+  height: 32px;
+  color: #fff;
+  border: none;
+  outline: none;
+  border-radius: 100px;
+  padding: 4px 16px;
+  margin-right: 10px;
+  border: 1px solid var(--button);
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+header .header-container .menu .btns button:nth-child(1) {
+  background-color: #fff;
+  color: var(--button);
+}
+header .header-container .menu .btns button:nth-child(1):hover {
+    background-color: #0078d30a;
+}
+header .header-container .menu .btns button:nth-child(2) {
+    background-color: var(--button);
+    color: #fff;
+}
+header .header-container .menu .btns button:nth-child(2):hover {
+    background-color: #0078d3e1;
+}
+header .header-container .menu .menu-items {
+  width: 70px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  color: var(--placeHolder);
+  font-size: 18px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+header .header-container .menu .menu-items:hover {
+  border-color: var(--line);
+}
