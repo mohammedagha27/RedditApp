@@ -1,5 +1,7 @@
+const { getAllPostsQ } = require("../../database/queries");
+
 const getAllPosts = (req, res) => {
-  //getAllPosts query
+  getAllPostsQ().then((data) => res.send(data.rows));
 };
 
 module.exports = getAllPosts;
