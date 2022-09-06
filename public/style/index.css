@@ -515,6 +515,7 @@ main {
   background-color: #fff;
   position: relative;
   padding-left: 45px;
+  overflow: hidden;
 }
 .score {
   padding-top: 10px;
