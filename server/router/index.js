@@ -21,9 +21,9 @@ router.post("/login", login);
 router.get("/logout", logout);
 router.get("/getLoggedUserData", isLogged, getLoggedUserData);
 //posts
-router.get("/search", searchPost);
 router.get("/posts", getAllPosts);
 router.post("/post", addNewPost);
+router.get("/search", searchPost);
 router.get("/delete-post/:id", deletePost);
 //comments
 router.get("/comments", getPostComments);

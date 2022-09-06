@@ -90,6 +90,10 @@ VALUES (2, 1, 'new comment2');
 
 INSERT INTO votes(post_id, user_id, vote) VALUES (1, 1, 1);
 
-INSERT INTO votes(post_id, user_id, vote) VALUES (1, 2, -1);
+INSERT INTO votes(post_id, user_id, vote) VALUES (1, 2, 1);
+
+INSERT INTO votes(post_id, user_id, vote) VALUES (2, 2, -1);
+
+INSERT INTO votes(post_id, user_id, vote) VALUES (2, 1, -1);
 
 COMMIT;
