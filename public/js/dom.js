@@ -1,6 +1,8 @@
 const loginForm = document.querySelector("form#login");
 const signupForm = document.querySelector("form#signup");
 const headerMenu = document.querySelector("header .menu-options");
+const pPostsContainer = document.querySelector(".p-posts");
+
 signupForm.addEventListener("submit", (e) => {
   e.preventDefault();
   fetch("/signup", {
@@ -136,3 +138,42 @@ const createNode = (tagName, classN) => {
   node.className = classN;
   return node;
 };
+
+const generatePosts = (posts) => {
+  console.log(posts);
+  pPostsContainer.textContent = "";
+  posts.forEach((post) => {
+    pPostsContainer.innerHTML += `<div class="p-post">
+    <div class="join">Join</div>
+    <div class="score">
+        <!-- <i class="fa-solid fa-circle-up"></i> -->
+        <i class="fa-regular fa-circle-up"></i>
+        ${post.votes_sum > 0 ? post.votes_sum : 0}
+        <!-- <i class="fa-solid fa-circle-down"></i> -->
+        <i class="fa-regular fa-circle-down"></i>
+    </div>
+    <div class="post-content">
+        <div class="p-post-header">
+            <span class="post-owner"><img
+                    src="${post.user_img}"
+                    alt=""> ${post.user_name}</span>
+            <span class="post-date">posted ${moment(post.posted_at).fromNow()}</span>
+        </div>
+        <div class="p-post-content">
+            <p>${post.content}</p>
+        </div>
+        <div class="p-post-footer">
+            <div class="p-comments"><i class="fa-regular fa-comment"></i>
+                <span>0 </span>comments
+            </div>
+            <div class="p-share"><i class="fa-solid fa-share"></i> Share</div>
+            <div class="p-save"><i class="fa-regular fa-bookmark"></i> Save</div>
+        </div>
+    </div>
+</div>`;
+  });
+};
+
+fetch("/posts")
+  .then((data) => data.json())
+  .then((data) => generatePosts(data));
