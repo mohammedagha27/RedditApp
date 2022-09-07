@@ -192,33 +192,44 @@ const setArrowsActions = () => {
   const downArrows = document.querySelectorAll(".down i");
   upArrows.forEach((arr) => {
     arr.addEventListener("click", (e) => {
-      const score = arr.parentElement.parentElement.querySelector("span");
-      const otherArr = arr.parentElement.parentElement.querySelector(".down i");
-      if (otherArr.classList.contains("active")) {
-        clearArrow(otherArr);
-        Number(score.textContent) > 0 ? riseScore(score) : "";
-      }
-      setArrow(arr);
-      if (arr.classList.contains("active")) {
-        riseScore(score);
-      } else {
-        downScore(score);
-      }
+      fetch("/getLoggedUserData")
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.msg) {
+            const score = arr.parentElement.parentElement.querySelector("span");
+            const otherArr =
+              arr.parentElement.parentElement.querySelector(".down i");
+            const post_id = arr.parentElement.dataset.postid;
+            if (otherArr.classList.contains("active")) {
+              clearArrow(otherArr);
+              Number(score.textContent) > 0 ? riseScore(score, post_id) : "";
+            }
+            setArrow(arr);
+            if (arr.classList.contains("active")) {
+              riseScore(score, post_id);
+            } else {
+              downScore(score, post_id);
+            }
+          } else {
+            loginPop.classList.add("active");
+          }
+        });
     });
   });
   downArrows.forEach((arr) => {
     arr.addEventListener("click", (e) => {
       const score = arr.parentElement.parentElement.querySelector("span");
       const otherArr = arr.parentElement.parentElement.querySelector(".up i");
+      const post_id = arr.parentElement.dataset.postid;
       if (otherArr.classList.contains("active")) {
         clearArrow(otherArr);
-        downScore(score);
+        downScore(score, post_id);
       }
       setArrow(arr);
       if (arr.classList.contains("active")) {
-        downScore(score);
+        downScore(score, post_id);
       } else {
-        riseScore(score);
+        riseScore(score, post_id);
       }
     });
   });
@@ -234,13 +245,43 @@ const setArrow = (arrow) => {
   arrow.classList.toggle("fa-solid");
   arrow.classList.toggle("active");
 };
-const riseScore = (score) => {
-  let oldScore = score.innerText;
-  let newScore = Number(score.innerText) + 1;
-  score.textContent = newScore;
+const riseScore = (score, post_id) => {
+  fetch("/vote", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      post_id: post_id,
+      vote: 1,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        let oldScore = score.innerText;
+        let newScore = Number(score.innerText) + 1;
+        score.textContent = newScore;
+      }
+    });
 };
-const downScore = (score) => {
-  let oldScore = score.innerText;
-  let newScore = Number(score.innerText) - 1;
-  score.textContent = newScore > 0 ? newScore : 0;
+const downScore = (score, post_id) => {
+  fetch("/vote", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      post_id: post_id,
+      vote: -1,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        let oldScore = score.innerText;
+        let newScore = Number(score.innerText) - 1;
+        score.textContent = newScore > 0 ? newScore : 0;
+      }
+    });
 };
