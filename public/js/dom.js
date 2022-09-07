@@ -218,19 +218,28 @@ const setArrowsActions = () => {
   });
   downArrows.forEach((arr) => {
     arr.addEventListener("click", (e) => {
-      const score = arr.parentElement.parentElement.querySelector("span");
-      const otherArr = arr.parentElement.parentElement.querySelector(".up i");
-      const post_id = arr.parentElement.dataset.postid;
-      if (otherArr.classList.contains("active")) {
-        clearArrow(otherArr);
-        downScore(score, post_id);
-      }
-      setArrow(arr);
-      if (arr.classList.contains("active")) {
-        downScore(score, post_id);
-      } else {
-        riseScore(score, post_id);
-      }
+      fetch("/getLoggedUserData")
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.msg) {
+            const score = arr.parentElement.parentElement.querySelector("span");
+            const otherArr =
+              arr.parentElement.parentElement.querySelector(".up i");
+            const post_id = arr.parentElement.dataset.postid;
+            if (otherArr.classList.contains("active")) {
+              clearArrow(otherArr);
+              downScore(score, post_id);
+            }
+            setArrow(arr);
+            if (arr.classList.contains("active")) {
+              downScore(score, post_id);
+            } else {
+              riseScore(score, post_id);
+            }
+          } else {
+            loginPop.classList.add("active");
+          }
+        });
     });
   });
 };
