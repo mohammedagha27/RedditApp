@@ -1,12 +1,16 @@
 const connection = require("../../config/connection");
 
-const addVoteQ = ({ post_id, user_id, vote }) => {
+const addVoteQ = ({ id, post_id, user_id, vote }) => {
   return connection.query(
     `
-    INSERT INTO votes(post_id, user_id, vote)
-     VALUES ($1, $2, $3);
+    INSERT INTO votes(id, post_id, user_id, vote)
+     VALUES ($1, $2, $3, $4)
+    ON CONFLICT (id)
+     DO UPDATE 
+     SET vote = $4
+     ;
     `,
-    [post_id, user_id, vote]
+    [id, post_id, user_id, vote]
   );
 };
 

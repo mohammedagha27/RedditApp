@@ -12,6 +12,7 @@ const {
   getPostComments,
   addVote,
   getLastVote,
+  deleteVote,
 } = require("../controller");
 const { getLoggedUserData } = require("../controller/Authentication");
 const { isLogged } = require("../middlewares");
@@ -34,5 +35,6 @@ router.get("/delete-comment/:id", deleteComment);
 //votes
 router.post("/vote", isLogged, addVote);
 router.get("/vote/:post_id", isLogged, getLastVote);
+router.delete("/vote/:post_id", isLogged, deleteVote);
 
 module.exports = router;
