@@ -141,12 +141,11 @@ const createNode = (tagName, classN) => {
 
 //? handle the posts received from db
 const generatePosts = (posts) => {
-  console.log(posts);
   pPostsContainer.textContent = "";
   posts.forEach((post) => {
     pPostsContainer.innerHTML += `<div class="p-post">
     <div class="join">Join</div>
-    <div class="score">
+    <div class="score" data-postId="${post.id}">
         <!-- <i class="fa-solid fa-circle-up"></i> -->
         <div class="up" data-postId="${
           post.id
@@ -179,13 +178,8 @@ const generatePosts = (posts) => {
     </div>
 </div>`;
   });
+  return posts;
 };
-
-//? get all posts and their votes
-fetch("/posts")
-  .then((data) => data.json())
-  .then((data) => generatePosts(data))
-  .then((data) => setArrowsActions());
 
 const setArrowsActions = () => {
   const upArrows = document.querySelectorAll(".up i");
@@ -285,3 +279,24 @@ const downScore = (score, post_id) => {
     }),
   });
 };
+//? get all posts and their votes
+fetch("/posts")
+  .then((data) => data.json())
+  .then((data) => generatePosts(data))
+  .then((data) => setArrowsActions())
+  .then(() => {
+    const scores = document.querySelectorAll(".score");
+    scores.forEach((s) => {
+      fetch(`/vote/${s.dataset.postid}`)
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.length > 0) {
+            if (data[0].vote === 1) {
+              setArrow(s.querySelector(".up i"));
+            } else {
+              setArrow(s.querySelector(".down i"));
+            }
+          }
+        });
+    });
+  });
