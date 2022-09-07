@@ -190,12 +190,23 @@ fetch("/posts")
 const setArrowsActions = () => {
   const upArrows = document.querySelectorAll(".up i");
   const downArrows = document.querySelectorAll(".down i");
-  upArrows.forEach((arr) => {
-    arr.addEventListener("click", (e) => {
-      fetch("/getLoggedUserData")
-        .then((res) => res.json())
-        .then((data) => {
-          if (!data.msg) {
+  fetch("/getLoggedUserData")
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.msg) {
+        upArrows.forEach((arr) => {
+          arr.addEventListener("click", (e) => {
+            loginPop.classList.add("active");
+          });
+        });
+        downArrows.forEach((arr) => {
+          arr.addEventListener("click", (e) => {
+            loginPop.classList.add("active");
+          });
+        });
+      } else {
+        upArrows.forEach((arr) => {
+          arr.addEventListener("click", (e) => {
             const score = arr.parentElement.parentElement.querySelector("span");
             const otherArr =
               arr.parentElement.parentElement.querySelector(".down i");
@@ -210,18 +221,10 @@ const setArrowsActions = () => {
             } else {
               downScore(score, post_id);
             }
-          } else {
-            loginPop.classList.add("active");
-          }
+          });
         });
-    });
-  });
-  downArrows.forEach((arr) => {
-    arr.addEventListener("click", (e) => {
-      fetch("/getLoggedUserData")
-        .then((res) => res.json())
-        .then((data) => {
-          if (!data.msg) {
+        downArrows.forEach((arr) => {
+          arr.addEventListener("click", (e) => {
             const score = arr.parentElement.parentElement.querySelector("span");
             const otherArr =
               arr.parentElement.parentElement.querySelector(".up i");
@@ -236,12 +239,10 @@ const setArrowsActions = () => {
             } else {
               riseScore(score, post_id);
             }
-          } else {
-            loginPop.classList.add("active");
-          }
+          });
         });
+      }
     });
-  });
 };
 
 const clearArrow = (arrow) => {
@@ -255,6 +256,9 @@ const setArrow = (arrow) => {
   arrow.classList.toggle("active");
 };
 const riseScore = (score, post_id) => {
+  let oldScore = score.innerText;
+  let newScore = Number(score.innerText) + 1;
+  score.textContent = newScore;
   fetch("/vote", {
     method: "post",
     headers: {
@@ -264,17 +268,12 @@ const riseScore = (score, post_id) => {
       post_id: post_id,
       vote: 1,
     }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.success) {
-        let oldScore = score.innerText;
-        let newScore = Number(score.innerText) + 1;
-        score.textContent = newScore;
-      }
-    });
+  });
 };
 const downScore = (score, post_id) => {
+  let oldScore = score.innerText;
+  let newScore = Number(score.innerText) - 1;
+  score.textContent = newScore > 0 ? newScore : 0;
   fetch("/vote", {
     method: "post",
     headers: {
@@ -284,13 +283,5 @@ const downScore = (score, post_id) => {
       post_id: post_id,
       vote: -1,
     }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.success) {
-        let oldScore = score.innerText;
-        let newScore = Number(score.innerText) - 1;
-        score.textContent = newScore > 0 ? newScore : 0;
-      }
-    });
+  });
 };
