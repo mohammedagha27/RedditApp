@@ -11,7 +11,7 @@ const getAllPostsQ = () => {
         on p.id = v.post_id
        left join users u
         on u.id =p.user_id
-      GROUP BY p.id, u.id ;`
+      GROUP BY p.id, u.id  order by votes_sum desc;`
   );
 };
 

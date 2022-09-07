@@ -139,6 +139,7 @@ const createNode = (tagName, classN) => {
   return node;
 };
 
+//? handle the posts received from db
 const generatePosts = (posts) => {
   console.log(posts);
   pPostsContainer.textContent = "";
@@ -147,17 +148,23 @@ const generatePosts = (posts) => {
     <div class="join">Join</div>
     <div class="score">
         <!-- <i class="fa-solid fa-circle-up"></i> -->
-        <i class="fa-regular fa-circle-up"></i>
-        ${post.votes_sum > 0 ? post.votes_sum : 0}
+        <div class="up" data-postId="${
+          post.id
+        }"><i class="fa-regular fa-circle-up"></i></div>
+        <span>${post.votes_sum > 0 ? post.votes_sum : 0}</span>
         <!-- <i class="fa-solid fa-circle-down"></i> -->
-        <i class="fa-regular fa-circle-down"></i>
+        <div class="down" data-postId="${
+          post.id
+        }"><i class="fa-regular fa-circle-down"></i></div>
     </div>
     <div class="post-content">
         <div class="p-post-header">
             <span class="post-owner"><img
                     src="${post.user_img}"
                     alt=""> ${post.user_name}</span>
-            <span class="post-date">posted ${moment(post.posted_at).fromNow()}</span>
+            <span class="post-date">posted ${moment(
+              post.posted_at
+            ).fromNow()}</span>
         </div>
         <div class="p-post-content">
             <p>${post.content}</p>
@@ -174,6 +181,66 @@ const generatePosts = (posts) => {
   });
 };
 
+//? get all posts and their votes
 fetch("/posts")
   .then((data) => data.json())
-  .then((data) => generatePosts(data));
+  .then((data) => generatePosts(data))
+  .then((data) => setArrowsActions());
+
+const setArrowsActions = () => {
+  const upArrows = document.querySelectorAll(".up i");
+  const downArrows = document.querySelectorAll(".down i");
+  upArrows.forEach((arr) => {
+    arr.addEventListener("click", (e) => {
+      const score = arr.parentElement.parentElement.querySelector("span");
+      const otherArr = arr.parentElement.parentElement.querySelector(".down i");
+      if (otherArr.classList.contains("active")) {
+        clearArrow(otherArr);
+        Number(score.textContent) > 0 ? riseScore(score) : "";
+      }
+      setArrow(arr);
+      if (arr.classList.contains("active")) {
+        riseScore(score);
+      } else {
+        downScore(score);
+      }
+    });
+  });
+  downArrows.forEach((arr) => {
+    arr.addEventListener("click", (e) => {
+      const score = arr.parentElement.parentElement.querySelector("span");
+      const otherArr = arr.parentElement.parentElement.querySelector(".up i");
+      if (otherArr.classList.contains("active")) {
+        clearArrow(otherArr);
+        downScore(score);
+      }
+      setArrow(arr);
+      if (arr.classList.contains("active")) {
+        downScore(score);
+      } else {
+        riseScore(score);
+      }
+    });
+  });
+};
+
+const clearArrow = (arrow) => {
+  arrow.classList.add("fa-regular");
+  arrow.classList.remove("fa-solid");
+  arrow.classList.remove("active");
+};
+const setArrow = (arrow) => {
+  arrow.classList.toggle("fa-regular");
+  arrow.classList.toggle("fa-solid");
+  arrow.classList.toggle("active");
+};
+const riseScore = (score) => {
+  let oldScore = score.innerText;
+  let newScore = Number(score.innerText) + 1;
+  score.textContent = newScore;
+};
+const downScore = (score) => {
+  let oldScore = score.innerText;
+  let newScore = Number(score.innerText) - 1;
+  score.textContent = newScore > 0 ? newScore : 0;
+};

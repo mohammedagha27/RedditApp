@@ -598,3 +598,7 @@ main {
   cursor: pointer;
   border-radius: 100px;
 }
+.up i.active,
+.down i.active {
+  color: var(--secColor);
+}
