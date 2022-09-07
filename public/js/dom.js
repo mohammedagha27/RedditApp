@@ -207,13 +207,19 @@ const setArrowsActions = () => {
             const post_id = arr.parentElement.dataset.postid;
             if (otherArr.classList.contains("active")) {
               clearArrow(otherArr);
-              Number(score.textContent) > 0 ? riseScore(score, post_id) : "";
             }
-            setArrow(arr);
             if (arr.classList.contains("active")) {
-              riseScore(score, post_id);
+              clearArrow(arr);
+              fetch(`/vote/${post_id}`, {
+                method: "delete",
+              })
+                .then((data) => data.json())
+                .then(console.log);
+              downScore(score);
             } else {
-              downScore(score, post_id);
+              riseScore(score);
+              AddVote(1, post_id);
+              setArrow(arr);
             }
           });
         });
@@ -225,18 +231,37 @@ const setArrowsActions = () => {
             const post_id = arr.parentElement.dataset.postid;
             if (otherArr.classList.contains("active")) {
               clearArrow(otherArr);
-              downScore(score, post_id);
             }
-            setArrow(arr);
             if (arr.classList.contains("active")) {
-              downScore(score, post_id);
+              clearArrow(arr);
+              fetch(`/vote/${post_id}`, {
+                method: "delete",
+              })
+                .then((data) => data.json())
+                .then(console.log);
+              riseScore(score);
             } else {
-              riseScore(score, post_id);
+              if (Number(score.innerText) > 0) {
+                downScore(score);
+                AddVote(-1, post_id);
+                setArrow(arr);
+              }
             }
           });
         });
       }
     });
+};
+
+const downScore = (score) => {
+  let oldScore = score.innerText;
+  let newScore = Number(oldScore) - 1;
+  score.textContent = newScore > 0 ? newScore : 0;
+};
+const riseScore = (score) => {
+  let oldScore = score.innerText;
+  let newScore = Number(oldScore) + 1;
+  score.textContent = newScore;
 };
 
 const clearArrow = (arrow) => {
@@ -245,14 +270,11 @@ const clearArrow = (arrow) => {
   arrow.classList.remove("active");
 };
 const setArrow = (arrow) => {
-  arrow.classList.toggle("fa-regular");
-  arrow.classList.toggle("fa-solid");
-  arrow.classList.toggle("active");
+  arrow.classList.remove("fa-regular");
+  arrow.classList.add("fa-solid");
+  arrow.classList.add("active");
 };
-const riseScore = (score, post_id) => {
-  let oldScore = score.innerText;
-  let newScore = Number(score.innerText) + 1;
-  score.textContent = newScore;
+const AddVote = (vote, post_id) => {
   fetch("/vote", {
     method: "post",
     headers: {
@@ -260,23 +282,25 @@ const riseScore = (score, post_id) => {
     },
     body: JSON.stringify({
       post_id: post_id,
-      vote: 1,
+      vote: vote,
     }),
   });
 };
-const downScore = (score, post_id) => {
-  let oldScore = score.innerText;
-  let newScore = Number(score.innerText) - 1;
-  score.textContent = newScore > 0 ? newScore : 0;
-  fetch("/vote", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      post_id: post_id,
-      vote: -1,
-    }),
+
+const setUserLastVote = () => {
+  const scores = document.querySelectorAll(".score");
+  scores.forEach((s) => {
+    fetch(`/vote/${s.dataset.postid}`)
+      .then((data) => data.json())
+      .then((data) => {
+        if (data.length > 0) {
+          if (data[0].vote === 1) {
+            setArrow(s.querySelector(".up i"));
+          } else {
+            setArrow(s.querySelector(".down i"));
+          }
+        }
+      });
   });
 };
 //? get all posts and their votes
@@ -284,19 +308,4 @@ fetch("/posts")
   .then((data) => data.json())
   .then((data) => generatePosts(data))
   .then((data) => setArrowsActions())
-  .then(() => {
-    const scores = document.querySelectorAll(".score");
-    scores.forEach((s) => {
-      fetch(`/vote/${s.dataset.postid}`)
-        .then((data) => data.json())
-        .then((data) => {
-          if (data.length > 0) {
-            if (data[0].vote === 1) {
-              setArrow(s.querySelector(".up i"));
-            } else {
-              setArrow(s.querySelector(".down i"));
-            }
-          }
-        });
-    });
-  });
+  .then((data) => setUserLastVote());
