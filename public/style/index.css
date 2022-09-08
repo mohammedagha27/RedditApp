@@ -471,9 +471,66 @@ main {
 .main-container .main-body .side {
   background-color: #fff;
   border: 1px solid #ccc;
-  height: 600px;
+  height: 400px;
   flex: 1;
   border-radius: 4px;
+  overflow: hidden;
+}
+.side .side-header {
+  width: 100%;
+  height: 80px;
+  background: url("https://www.redditstatic.com/desktop2x/img/leaderboard/banner-background.png");
+  background-position: center;
+  background-size: auto;
+  background-repeat: no-repeat;
+ 
+}
+.side .side-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  padding: 1rem;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+.side ol {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0 1rem;
+  list-style-position: inside;
+}
+.side ol li {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  padding: 10px 0;
+  border-bottom: 2px solid var(--line);
+  width: 100%;
+}
+.side ol li .red-score{
+  margin-left: 100px;
+  background-color: var(--button);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+}
+.side ol li img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 .main-container .main-body .popular .popular-body {
 }
