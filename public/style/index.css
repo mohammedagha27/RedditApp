@@ -1,7 +1,7 @@
 body {
-  padding-top: 50px;
+  padding: 50px 0;
   background-color: var(--bodyBackground);
-  height: 1000px;
+  min-height: 100vh;
 }
 header {
   width: 100%;
@@ -376,18 +376,19 @@ button#shop-avatars {
   left: 0;
   background-color: var(--headerBackground);
   width: 100%;
-  height: 45px;
-  bottom: -100%;
+  height: 80px;
+  bottom: -80px;
   z-index: 99;
   justify-content: flex-start;
   align-items: center;
   text-decoration: none;
+  flex-direction: column;
   display: none;
 }
 .logout-menu.active {
   display: flex;
 }
-.logout-menu:hover {
+.logout-menu a:hover {
   background-color: var(--field);
 }
 
@@ -416,6 +417,12 @@ main {
 .main-container .trending {
   width: 100%;
   height: 220px;
+  display: none;
+}
+.main-container .trending.active {
+  width: 100%;
+  height: 220px;
+  display: block;
 }
 .main-container h3 {
   color: var(--postHeader);
@@ -602,4 +609,38 @@ main {
 .down i.active {
   color: var(--secColor);
 }
-
+.add-post {
+  padding: 0 10px;
+  justify-content: space-between !important;
+  align-items: center !important;
+  display: none !important;
+}
+.add-post.active {
+  display: flex !important;
+}
+.add-post input {
+  height: 38px;
+  width: 75%;
+  padding: 0px 1rem;
+  border: 1px solid var(--line);
+  color: var(--placeHolder);
+  background-color: var(--field);
+  outline: none;
+  border-radius: 4px;
+}
+.add-post .add-post-icons i {
+  font-size: 18px;
+  color: var(--placeHolder);
+  margin: 0 5px;
+  cursor: pointer;
+}
+input:focus,
+textarea:focus,
+input:hover,
+textarea:hover {
+  border: 1px solid var(--button);
+}
+.add-post .add-post-img img {
+  width: 50px;
+  transform: translateY(-5px);
+}

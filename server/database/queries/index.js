@@ -1,7 +1,7 @@
 const addNewUserQ = require("./addNewUserQ");
 const checkNewUserDataQ = require("./checkNewUserDataQ");
 const loginCheckQ = require("./loginCheckQ");
-const { getAllPostsQ } = require("./posts");
+const { getAllPostsQ, addNewPostQ } = require("./posts");
 const { deleteVoteQ, addVoteQ, getLastVoteQ } = require("./votes");
 
 module.exports = {
@@ -12,4 +12,5 @@ module.exports = {
   deleteVoteQ,
   addVoteQ,
   getLastVoteQ,
+  addNewPostQ,
 };

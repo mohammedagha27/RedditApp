@@ -1,4 +1,5 @@
 const express = require("express");
+const { join } = require("path");
 const {
   signUp,
   login,
@@ -25,7 +26,7 @@ router.get("/logout", logout);
 router.get("/getLoggedUserData", isLogged, getLoggedUserData);
 //posts
 router.get("/posts", getAllPosts);
-router.post("/post", addNewPost);
+router.post("/post", isLogged, addNewPost);
 router.get("/search", searchPost);
 router.get("/delete-post/:id", deletePost);
 //comments
