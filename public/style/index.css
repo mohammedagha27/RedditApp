@@ -471,7 +471,8 @@ main {
 .main-container .main-body .side {
   background-color: #fff;
   border: 1px solid #ccc;
-  height: 400px;
+  height: fit-content;
+  padding-bottom: 1rem;
   flex: 1;
   border-radius: 4px;
   overflow: hidden;
@@ -483,7 +484,14 @@ main {
   background-position: center;
   background-size: auto;
   background-repeat: no-repeat;
- 
+  position: relative;
+}
+.side .side-header h3 {
+  position: absolute;
+  right: 20px;
+  bottom: 18px;
+  color: #fff;
+  font-weight: 600;
 }
 .side .side-header h2 {
   font-size: 18px;
@@ -506,26 +514,32 @@ main {
   list-style-position: inside;
 }
 .side ol li {
+  position: relative;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 5px;
+  gap: 10px;
   padding: 10px 0;
   border-bottom: 2px solid var(--line);
   width: 100%;
 }
-.side ol li .red-score{
-  margin-left: 100px;
+.side ol li .red-score {
+  position: absolute;
+  right: 20px;
   background-color: var(--button);
   color: #fff;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 600;
+}
+.side ol li:nth-child(1) .red-score{
+  background-color: var(--secColor);
+  font-size: 20px;
 }
 .side ol li img {
   width: 30px;

@@ -16,6 +16,7 @@ const pPostsContainer = document.querySelector(".p-posts");
 const trendingPosts = document.querySelector(".main-container .trending");
 const addPostHeader = document.querySelector(" div.p-header.add-post");
 const addPostInput = document.querySelector(".p-header.add-post input");
+const topUsersList = document.querySelector(".side-redditors ol");
 
 //? receive a form and return an object contain all the form inputs and its value
 const getFormInputs = (form) => {
@@ -287,6 +288,24 @@ const setArrowsActions = () => {
       }
     });
 };
+
+const generateTopUsersList = (data) => {
+  topUsersList.textContent = "";
+  data.forEach((user) => {
+    topUsersList.innerHTML += `
+    <li>
+      <img src="${user.img_url || `https://ui-avatars.com/api/?name=${user.username}&background=random`}" alt="">
+      <span class="red-name"> ${user.username}</span>
+      <span class="red-score">${user.count}</span>
+    </li>
+    `;
+  });
+};
+
+//? get top users according to the posts count.
+fetch("/TopUsers")
+  .then((data) => data.json())
+  .then((data) => generateTopUsersList(data));
 //? get all posts and their votes
 fetch("/posts")
   .then((data) => data.json())

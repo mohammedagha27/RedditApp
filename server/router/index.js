@@ -14,11 +14,14 @@ const {
   addVote,
   getLastVote,
   deleteVote,
+  getTopUsers,
 } = require("../controller");
 const { getLoggedUserData } = require("../controller/Authentication");
 const { isLogged } = require("../middlewares");
 const router = express.Router();
 
+//users
+router.get("/topUsers", getTopUsers);
 //Authentication
 router.post("/signup", signUp);
 router.post("/login", login);
