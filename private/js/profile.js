@@ -1,5 +1,7 @@
 const postForm = document.querySelector(".create-post-body form");
 const input = document.querySelector('input[type="file"]');
+const loading = document.querySelector(".loading");
+
 const Toast = Swal.mixin({
   toast: true,
   position: "bottom-end",
@@ -16,6 +18,7 @@ const uploadMedia = (post_id) => {
   const data = new FormData();
   data.append("media", input.files[0]);
   data.append("post_id", post_id);
+  loading.classList.add("active");
   fetch("/addNewPostMedia", {
     method: "POST",
     body: data,
@@ -23,6 +26,7 @@ const uploadMedia = (post_id) => {
     .then((data) => data.json())
     .then((data) => {
       if (data.msg) {
+        loading.classList.remove("active");
         Toast.fire({
           icon: "success",
           title: "Post added successfully",
