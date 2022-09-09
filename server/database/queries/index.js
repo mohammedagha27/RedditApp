@@ -2,7 +2,7 @@ const addNewUserQ = require("./addNewUserQ");
 const getTopUsersQ = require("./getTopUsersQ");
 const checkNewUserDataQ = require("./checkNewUserDataQ");
 const loginCheckQ = require("./loginCheckQ");
-const { getAllPostsQ, addNewPostQ, addNewPostMediaQ } = require("./posts");
+const { getAllPostsQ, addNewPostQ, addNewPostMediaQ,deletePostQ } = require("./posts");
 const { deleteVoteQ, addVoteQ, getLastVoteQ } = require("./votes");
 
 module.exports = {
@@ -16,4 +16,5 @@ module.exports = {
   addNewPostQ,
   getTopUsersQ,
   addNewPostMediaQ,
+  deletePostQ
 };

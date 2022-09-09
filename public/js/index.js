@@ -83,48 +83,142 @@ const shiftAuthPopup = (e) => {
   signUpPop.classList.toggle("active");
 };
 
+const deletePost = (event, post_id) => {
+  event.preventDefault();
+  const post = event.target.parentElement.parentElement.parentElement;
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch(`/post/${post_id}`, {
+        method: "delete",
+      })
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.msg) {
+            post.remove();
+            Swal.fire("Deleted!", data.msg, "success");
+          }
+        });
+    }
+  });
+};
+
+const setArrowAction = (event, user) => {
+  const arr = event.target;
+  if (!user) {
+    showElement(loginPop);
+  } else {
+    const arrType = arr.parentElement.classList[0];
+    if (arrType === "up") {
+      const score = arr.parentElement.parentElement.querySelector("span");
+      const otherArr = arr.parentElement.parentElement.querySelector(".down i");
+      const post_id = arr.parentElement.dataset.postid;
+      if (otherArr.classList.contains("active")) {
+        clearArrow(otherArr);
+        riseScore(score);
+      }
+      if (arr.classList.contains("active")) {
+        clearArrow(arr);
+        fetch(`/vote/${post_id}`, {
+          method: "delete",
+        })
+          .then((data) => data.json())
+          .then(console.log);
+        downScore(score);
+      } else {
+        riseScore(score);
+        AddVote(1, post_id);
+        setArrow(arr);
+      }
+    } else {
+      const score = arr.parentElement.parentElement.querySelector("span");
+      const otherArr = arr.parentElement.parentElement.querySelector(".up i");
+      const post_id = arr.parentElement.dataset.postid;
+      if (otherArr.classList.contains("active")) {
+        clearArrow(otherArr);
+        downScore(score);
+      }
+      if (arr.classList.contains("active")) {
+        clearArrow(arr);
+        fetch(`/vote/${post_id}`, {
+          method: "delete",
+        })
+          .then((data) => data.json())
+          .then(console.log);
+        riseScore(score);
+      } else {
+        if (Number(score.innerText) > 0) {
+          downScore(score);
+          AddVote(-1, post_id);
+          setArrow(arr);
+        }
+      }
+    }
+  }
+};
+
 //? handle the posts received from db
-const generatePosts = (posts) => {
+const generatePosts = (posts, user) => {
   pPostsContainer.textContent = "";
   posts.forEach((post) => {
-    pPostsContainer.innerHTML += `<div class="p-post">
-    <div class="join">Join</div>
-    <div class="score" data-postId="${post.id}">
-    <!-- <i class="fa-solid fa-circle-up"></i> -->
-    <div class="up" data-postId="${
+    pPostsContainer.innerHTML += `
+        <div class="p-post">
+        <div class="join"> ${
+          post.user_id === user?.id
+            ? `<a href="/post/${post.id}" onclick="deletePost(event,${post.id})"><i class="fa-solid fa-trash"></i></a>`
+            : "<span>Join</span>"
+        }</div>
+        <div class="score" data-postId="${post.id}">
+        <!-- <i class="fa-solid fa-circle-up"></i> -->
+        <div class="up" onclick="setArrowAction(event,${
+          user?.id
+        })" data-postId="${
       post.id
     }"><i class="fa-regular fa-circle-up"></i></div>
-        <span>${post.votes_sum > 0 ? post.votes_sum : 0}</span>
-        <!-- <i class="fa-solid fa-circle-down"></i> -->
-        <div class="down" data-postId="${
-          post.id
-        }"><i class="fa-regular fa-circle-down"></i></div>
-    </div>
-    <div class="post-content">
-        <div class="p-post-header">
-        <span class="post-owner"><img
-                    src="${
-                      post.user_img ||
-                      `https://ui-avatars.com/api/?name=${post.user_name}&background=random`
-                    }"
-                    alt=""> ${post.user_name}</span>
-            <span class="post-date">posted ${moment(
-              post.posted_at
-            ).fromNow()}</span>
+            <span>${post.votes_sum > 0 ? post.votes_sum : 0}</span>
+            <!-- <i class="fa-solid fa-circle-down"></i> -->
+            <div class="down" onclick="setArrowAction(event,${
+              user?.id
+            })" data-postId="${
+      post.id
+    }"><i class="fa-regular fa-circle-down"></i></div>
         </div>
-        <div class="p-post-content">
-        <p>${post.content}</p>
-        ${post.media ? `<img src="/uploads/images/${post.media}"></img>` : ""}
-        </div>
-        <div class="p-post-footer">
-        <div class="p-comments"><i class="fa-regular fa-comment"></i>
-        <span>0 </span>comments
-        </div>
-        <div class="p-share"><i class="fa-solid fa-share"></i> Share</div>
-        <div class="p-save"><i class="fa-regular fa-bookmark"></i> Save</div>
-        </div>
-        </div>
-        </div>`;
+        <div class="post-content">
+            <div class="p-post-header">
+            <span class="post-owner"><img
+                        src="${
+                          post.user_img ||
+                          `https://ui-avatars.com/api/?name=${post.user_name}&background=random`
+                        }"
+                        alt=""> ${post.user_name}</span>
+                <span class="post-date">posted ${moment(
+                  post.posted_at
+                ).fromNow()}</span>
+            </div>
+            <div class="p-post-content">
+            <p>${post.content}</p>
+            ${
+              post.media
+                ? `<img src="/uploads/images/${post.media}"></img>`
+                : ""
+            }
+            </div>
+            <div class="p-post-footer">
+            <div class="p-comments"><i class="fa-regular fa-comment"></i>
+            <span>0 </span>comments
+            </div>
+            <div class="p-share"><i class="fa-solid fa-share"></i> Share</div>
+            <div class="p-save"><i class="fa-regular fa-bookmark"></i> Save</div>
+            </div>
+            </div>
+            </div>`;
   });
   return posts;
 };
@@ -203,6 +297,7 @@ const AddVote = (vote, post_id) => {
 
 const setUserLastVote = () => {
   const scores = document.querySelectorAll(".score");
+  console.log(scores);
   scores.forEach((s) => {
     fetch(`/vote/${s.dataset.postid}`)
       .then((data) => data.json())
@@ -216,78 +311,6 @@ const setUserLastVote = () => {
         }
       });
   });
-};
-
-const setArrowsActions = () => {
-  const upArrows = document.querySelectorAll(".up i");
-  const downArrows = document.querySelectorAll(".down i");
-  fetch("/getLoggedUserData")
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.msg) {
-        upArrows.forEach((arr) => {
-          arr.addEventListener("click", (e) => {
-            showElement(loginPop);
-          });
-        });
-        downArrows.forEach((arr) => {
-          arr.addEventListener("click", (e) => {
-            showElement(loginPop);
-          });
-        });
-      } else {
-        upArrows.forEach((arr) => {
-          arr.addEventListener("click", (e) => {
-            const score = arr.parentElement.parentElement.querySelector("span");
-            const otherArr =
-              arr.parentElement.parentElement.querySelector(".down i");
-            const post_id = arr.parentElement.dataset.postid;
-            if (otherArr.classList.contains("active")) {
-              clearArrow(otherArr);
-            }
-            if (arr.classList.contains("active")) {
-              clearArrow(arr);
-              fetch(`/vote/${post_id}`, {
-                method: "delete",
-              })
-                .then((data) => data.json())
-                .then(console.log);
-              downScore(score);
-            } else {
-              riseScore(score);
-              AddVote(1, post_id);
-              setArrow(arr);
-            }
-          });
-        });
-        downArrows.forEach((arr) => {
-          arr.addEventListener("click", (e) => {
-            const score = arr.parentElement.parentElement.querySelector("span");
-            const otherArr =
-              arr.parentElement.parentElement.querySelector(".up i");
-            const post_id = arr.parentElement.dataset.postid;
-            if (otherArr.classList.contains("active")) {
-              clearArrow(otherArr);
-            }
-            if (arr.classList.contains("active")) {
-              clearArrow(arr);
-              fetch(`/vote/${post_id}`, {
-                method: "delete",
-              })
-                .then((data) => data.json())
-                .then(console.log);
-              riseScore(score);
-            } else {
-              if (Number(score.innerText) > 0) {
-                downScore(score);
-                AddVote(-1, post_id);
-                setArrow(arr);
-              }
-            }
-          });
-        });
-      }
-    });
 };
 
 const generateTopUsersList = (data) => {
@@ -306,13 +329,41 @@ const generateTopUsersList = (data) => {
   });
 };
 
+const setDeleteBtn = (data) => {
+  let btns = document.querySelectorAll(".join");
+  btns.forEach((btn) => {
+    fetch("/getLoggedUserData")
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.msg) {
+          btn.textContent = "delete";
+          btn.style.backgroundColor = "red";
+        }
+      });
+  });
+};
+
 //? get top users according to the posts count.
 fetch("/TopUsers")
   .then((data) => data.json())
   .then((data) => generateTopUsersList(data));
+
+// fetch("/posts")
+//   .then((data) => data.json())
+//   .then((data) => generatePosts(data))
+//   .then((data) => setDeleteBtn(data))
+//   .then((data) => setArrowsActions())
+//   .then((data) => setUserLastVote());
+
 //? get all posts and their votes
-fetch("/posts")
-  .then((data) => data.json())
-  .then((data) => generatePosts(data))
-  .then((data) => setArrowsActions())
-  .then((data) => setUserLastVote());
+fetch("/getLoggedUserData")
+  .then((res) => res.json())
+  .then((user) => {
+    return user.msg ? null : user;
+  })
+  .then((user) => {
+    fetch("/posts")
+      .then((data) => data.json())
+      .then((data) => generatePosts(data, user))
+      .then((user) => setUserLastVote());
+  });

@@ -39,7 +39,6 @@ const fileStorage = multer.diskStorage({
 });
 const upload = multer({ storage: fileStorage });
 
-
 //users
 router.get("/topUsers", getTopUsers);
 //Authentication
@@ -57,11 +56,11 @@ router.post(
   addNewPostMedia
 );
 router.get("/search", searchPost);
-router.get("/delete-post/:id", deletePost);
+router.delete("/post/:id", deletePost);
 //comments
 router.get("/comments", getPostComments);
 router.post("/comment", postNewComment);
-router.get("/delete-comment/:id", deleteComment);
+router.delete("/delete-comment/:id", deleteComment);
 //votes
 router.post("/vote", isLogged, addVote);
 router.get("/vote/:post_id", isLogged, getLastVote);

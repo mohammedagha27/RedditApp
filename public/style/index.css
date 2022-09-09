@@ -537,7 +537,7 @@ main {
   align-items: center;
   font-weight: 600;
 }
-.side ol li:nth-child(1) .red-score{
+.side ol li:nth-child(1) .red-score {
   background-color: var(--secColor);
   font-size: 20px;
 }
@@ -670,12 +670,22 @@ main {
   font-size: 14px;
   font-weight: 700;
   right: 10px;
-  background-color: var(--button);
   color: #fff;
-  padding: 3px 15px;
   cursor: pointer;
-  border-radius: 100px;
 }
+.p-post .join span {
+  border-radius: 100px;
+  padding: 3px 15px;
+  background-color: var(--button);
+}
+.join a {
+  width: 40px;
+  height: 40px;
+  color: red;
+  font-size: 24px;  
+  padding: 0px 15px;
+}
+
 .up i.active,
 .down i.active {
   color: var(--secColor);
@@ -716,8 +726,8 @@ textarea:hover {
   transform: translateY(-5px);
 }
 
-.p-post-content img{
+.p-post-content img {
   max-width: 80%;
-  margin-top: 1rem ;
+  margin-top: 1rem;
   border-radius: 4px;
 }
