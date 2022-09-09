@@ -3,7 +3,7 @@ const connection = require("../../config/connection");
 const getAllPostsQ = () => {
   return connection.query(
     `select
-      p.id, p.title, p.content, p.posted_at,
+      p.*,
       u.username as user_name, u.img_url as user_img,
       SUM (COALESCE(v.vote,0)) as votes_sum 
     from

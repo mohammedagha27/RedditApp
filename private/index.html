@@ -70,14 +70,14 @@
             </div>
         </div>
     </header>
-
     <div class="profile-container">
         <div class="create-post">
             <h2>Create a post</h2>
             <div class="create-post-body">
-                <form action="/post" method="post">
+                <form action="/post" method="post" enctype="multipart/form-data">
                     <input type="text" name="title" id="title" placeholder="Title">
                     <textarea name="content" id="content" cols="30" rows="10">content</textarea>
+                    <input type="file" name="media" id="media">
                     <button>Post</button>
                 </form>
             </div>
