@@ -16,6 +16,7 @@ CREATE TABLE
         id serial primary key,
         title text not null,
         content text not null,
+        media text,
         user_id INTEGER not null,
         posted_at timestamptz not null default current_timestamp,
         foreign key (user_id) references users(id) on DELETE CASCADE
@@ -88,74 +89,6 @@ VALUES (
 
 INSERT INTO
     posts(title, content, user_id)
-VALUES ('new post', 'idk', 1);
-
-INSERT INTO
-    posts(title, content, user_id)
-VALUES ('new post2', 'idk2', 2);
-
-INSERT INTO
-    posts(title, content, user_id)
-VALUES ('new post3', 'idk2', 2);
-
-INSERT INTO
-    posts(title, content, user_id)
-VALUES ('new post4', 'idk2', 3);
-
-INSERT INTO
-    comments(user_id, post_id, comment)
-VALUES (1, 1, 'new comment');
-
-INSERT INTO
-    comments(user_id, post_id, comment)
-VALUES (
-        3,
-        1,
-        'new comment  post 1user3'
-    );
-
-INSERT INTO
-    comments(user_id, post_id, comment)
-VALUES (
-        3,
-        2,
-        'new comment post 2 user 3'
-    );
-
-INSERT INTO
-    comments(user_id, post_id, comment)
-VALUES (
-        3,
-        3,
-        'new post 3 comment user 3'
-    );
-
-INSERT INTO
-    comments(user_id, post_id, comment)
-VALUES (2, 1, 'new comment2');
-
--- post1
-
--- INSERT INTO votes(post_id, user_id, vote) VALUES (1, 1, 1);
-
--- INSERT INTO votes(post_id, user_id, vote) VALUES (1, 2, 1);
-
--- INSERT INTO votes(post_id, user_id, vote) VALUES (1, 3, 1);
-
--- -- post2
-
--- INSERT INTO votes(post_id, user_id, vote) VALUES (2, 1, -1);
-
--- INSERT INTO votes(post_id, user_id, vote) VALUES (2, 2, -1);
-
--- INSERT INTO votes(post_id, user_id, vote) VALUES (2, 3, -1);
-
--- -- post3
-
--- INSERT INTO votes(post_id, user_id, vote) VALUES (3, 1, -1);
-
--- INSERT INTO votes(post_id, user_id, vote) VALUES (3, 2, 1);
-
--- INSERT INTO votes(post_id, user_id, vote) VALUES (3, 3, 1);
+VALUES ('new Update', 'Now you can upload images in posts', 1);
 
 COMMIT;

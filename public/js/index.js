@@ -114,6 +114,7 @@ const generatePosts = (posts) => {
         </div>
         <div class="p-post-content">
         <p>${post.content}</p>
+        ${post.media ? `<img src="/uploads/images/${post.media}"></img>` : ""}
         </div>
         <div class="p-post-footer">
         <div class="p-comments"><i class="fa-regular fa-comment"></i>
@@ -294,7 +295,10 @@ const generateTopUsersList = (data) => {
   data.forEach((user) => {
     topUsersList.innerHTML += `
     <li>
-      <img src="${user.img_url || `https://ui-avatars.com/api/?name=${user.username}&background=random`}" alt="">
+      <img src="${
+        user.img_url ||
+        `https://ui-avatars.com/api/?name=${user.username}&background=random`
+      }" alt="">
       <span class="red-name"> ${user.username}</span>
       <span class="red-score">${user.count}</span>
     </li>

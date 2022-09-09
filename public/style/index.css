@@ -715,3 +715,9 @@ textarea:hover {
   width: 50px;
   transform: translateY(-5px);
 }
+
+.p-post-content img{
+  max-width: 80%;
+  margin-top: 1rem ;
+  border-radius: 4px;
+}
