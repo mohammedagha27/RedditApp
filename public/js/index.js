@@ -172,7 +172,7 @@ const generatePosts = (posts, user) => {
         <div class="p-post">
         <div class="join"> ${
           post.user_id === user?.id
-            ? `<a href="/post/${post.id}" onclick="deletePost(event,${post.id})"><i class="fa-solid fa-trash"></i></a>`
+            ? `<a href="/post/${post.id}" onclick="event.preventDefault()"><i class="fa-solid fa-trash" onclick="deletePost(event,${post.id})"></i></a>`
             : "<span>Join</span>"
         }</div>
         <div class="score" data-postId="${post.id}">
@@ -347,7 +347,6 @@ const setDeleteBtn = (data) => {
 fetch("/TopUsers")
   .then((data) => data.json())
   .then((data) => generateTopUsersList(data));
-
 
 // fetch("/posts")
 //   .then((data) => data.json())
