@@ -348,6 +348,7 @@ fetch("/TopUsers")
   .then((data) => data.json())
   .then((data) => generateTopUsersList(data));
 
+
 // fetch("/posts")
 //   .then((data) => data.json())
 //   .then((data) => generatePosts(data))
