@@ -23,7 +23,7 @@ const { getLoggedUserData } = require("../controller/Authentication");
 const { isLogged } = require("../middlewares");
 const router = express.Router();
 
-//? to create the images file if not exist
+//? to create the uploads folder if not exist
 const dir = join(__dirname, "..", "..", "public", "uploads", "images");
 !fs.existsSync(dir) && fs.mkdirSync(dir);
 const fileStorage = multer.diskStorage({
