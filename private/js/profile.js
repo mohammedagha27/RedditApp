@@ -13,7 +13,18 @@ const Toast = Swal.mixin({
     toast.addEventListener("mouseleave", Swal.resumeTimer);
   },
 });
+var uploadField = document.getElementById("file");
 
+input.onchange = function () {
+  if (this.files[0].size > 2097152) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Images size is to large! max-size: 2mb",
+    });
+    this.value = "";
+  }
+};
 const uploadMedia = (post_id) => {
   const data = new FormData();
   data.append("media", input.files[0]);
