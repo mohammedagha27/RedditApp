@@ -44,7 +44,7 @@ router.post(
   addNewPostMedia //db query
 );
 router.get("/search", searchPost);
-router.delete("/post/:id", deletePost);
+router.delete("/post/:id", isLogged, deletePost);
 
 //votes
 router.post("/vote", isLogged, addVote);

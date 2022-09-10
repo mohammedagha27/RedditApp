@@ -1,4 +1,4 @@
-const connection = require("../config/connection");
+const connection = require("../../config/connection");
 
 const checkNewUserDataQ = (email, username) => {
   return connection.query(
