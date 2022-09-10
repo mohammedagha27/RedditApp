@@ -10,7 +10,7 @@ const signUp = (req, res) => {
   const validation = signupValidation(req.body);
 
   if (validation.error) {
-    res.send(validation.error.details);
+    res.status(400).json(validation.error.details);
   } else {
     //* check if the email or username is taken by another user
     checkNewUserDataQ(email, username).then((data) => {
@@ -26,10 +26,14 @@ const signUp = (req, res) => {
         });
       } else {
         data.rows[0].email === email
-          ? res.send([{ message: "Email already taken", path: ["email"] }])
+          ? res
+              .status(400)
+              .json([{ message: "Email already taken", path: ["email"] }])
           : "";
         data.rows[0].username === username
-          ? res.send([{ message: "Username already taken", path: ["username"] }])
+          ? res
+              .status(400)
+              .json([{ message: "Username already taken", path: ["username"] }])
           : "";
       }
     });

@@ -10,12 +10,14 @@ const login = (req, res) => {
   //* validate the user inputs
   const validation = loginValidation(req.body);
   if (validation.error) {
-    res.send(validation.error.details);
+    res.status(400).json(validation.error.details);
   } else {
     //* serch if the user exists in the database
     loginCheckQ(username).then((data) => {
       if (data.rowCount === 0) {
-        res.send([{ message: "User not found", path: ["username"] }]);
+        res
+          .status(400)
+          .json([{ message: "User not found", path: ["username"] }]);
       } else {
         const user = data.rows[0];
         //* compare the returned user password with the input password
@@ -24,7 +26,9 @@ const login = (req, res) => {
           else {
             success
               ? generateToken(req, res, user)
-              : res.send([{ message: "wrong Password", path: ["password"] }]);
+              : res
+                  .status(400)
+                  .json([{ message: "wrong Password", path: ["password"] }]);
           }
         });
       }

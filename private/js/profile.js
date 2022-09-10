@@ -36,14 +36,18 @@ const uploadMedia = (post_id) => {
   })
     .then((data) => data.json())
     .then((data) => {
-      if (data.msg) {
+      if (data.success) {
         loading.classList.remove("active");
         Toast.fire({
           icon: "success",
           title: "Post added successfully",
         });
-      } else if (data.error) {
-        console.log(data.error);
+      } else if (data.msg) {
+        loading.classList.remove("active");
+        Toast.fire({
+          icon: "error",
+          title: data.msg,
+        });
       }
     });
 };
@@ -62,14 +66,21 @@ postForm.addEventListener("submit", (e) => {
   })
     .then((data) => data.json())
     .then((data) => {
-      const post_id = data[0].id;
-      if (input.value) {
-        uploadMedia(post_id);
-      } else {
+      if (data.msg) {
         Toast.fire({
-          icon: "success",
-          title: "Post added successfully",
+          icon: "error",
+          title: data.msg,
         });
+      } else {
+        const post_id = data[0].id;
+        if (input.value) {
+          uploadMedia(post_id);
+        } else {
+          Toast.fire({
+            icon: "success",
+            title: "Post added successfully",
+          });
+        }
       }
     });
 });

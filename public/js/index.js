@@ -18,6 +18,18 @@ const addPostHeader = document.querySelector(" div.p-header.add-post");
 const addPostInput = document.querySelector(".p-header.add-post input");
 const topUsersList = document.querySelector(".side-redditors ol");
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "bottom-end",
+  showConfirmButton: false,
+  timer: 5000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
+
 //? receive a form and return an object contain all the form inputs and its value
 const getFormInputs = (form) => {
   let inputs = form.querySelectorAll("input");
@@ -101,9 +113,14 @@ const deletePost = (event, post_id) => {
       })
         .then((data) => data.json())
         .then((data) => {
-          if (data.msg) {
+          if (data.success) {
             post.remove();
-            Swal.fire("Deleted!", data.msg, "success");
+            Swal.fire("Deleted!", data.success, "success");
+          } else {
+            Toast.fire({
+              icon: "error",
+              title: data.msg,
+            });
           }
         });
     }
@@ -130,7 +147,14 @@ const setArrowAction = (event, user) => {
           method: "delete",
         })
           .then((data) => data.json())
-          .then(console.log);
+          .then((data) => {
+            if (data.msg) {
+              Toast.fire({
+                icon: "error",
+                title: data.msg,
+              });
+            }
+          });
         downScore(score);
       } else {
         riseScore(score);
@@ -151,7 +175,14 @@ const setArrowAction = (event, user) => {
           method: "delete",
         })
           .then((data) => data.json())
-          .then(console.log);
+          .then((data) => {
+            if (data.msg) {
+              Toast.fire({
+                icon: "error",
+                title: data.msg,
+              });
+            }
+          });
         riseScore(score);
       } else {
         if (Number(score.innerText) > 0) {
@@ -167,8 +198,14 @@ const setArrowAction = (event, user) => {
 //? handle the posts received from db
 const generatePosts = (posts, user) => {
   pPostsContainer.textContent = "";
-  posts.forEach((post) => {
-    pPostsContainer.innerHTML += `
+  if (posts.msg) {
+    Toast.fire({
+      icon: "error",
+      title: posts.msg,
+    });
+  } else {
+    posts.forEach((post) => {
+      pPostsContainer.innerHTML += `
         <div class="p-post">
         <div class="join"> ${
           post.user_id === user?.id
@@ -180,15 +217,15 @@ const generatePosts = (posts, user) => {
         <div class="up" onclick="setArrowAction(event,${
           user?.id
         })" data-postId="${
-      post.id
-    }"><i class="fa-regular fa-circle-up"></i></div>
+        post.id
+      }"><i class="fa-regular fa-circle-up"></i></div>
             <span>${post.votes_sum > 0 ? post.votes_sum : 0}</span>
             <!-- <i class="fa-solid fa-circle-down"></i> -->
             <div class="down" onclick="setArrowAction(event,${
               user?.id
             })" data-postId="${
-      post.id
-    }"><i class="fa-regular fa-circle-down"></i></div>
+        post.id
+      }"><i class="fa-regular fa-circle-down"></i></div>
         </div>
         <div class="post-content">
             <div class="p-post-header">
@@ -204,11 +241,7 @@ const generatePosts = (posts, user) => {
             </div>
             <div class="p-post-content">
             <p>${post.content}</p>
-            ${
-              post.media
-                ? `<img src="${post.media}"></img>`
-                : ""
-            }
+            ${post.media ? `<img src="${post.media}"></img>` : ""}
             </div>
             <div class="p-post-footer">
             <div class="p-comments"><i class="fa-regular fa-comment"></i>
@@ -219,8 +252,9 @@ const generatePosts = (posts, user) => {
             </div>
             </div>
             </div>`;
-  });
-  return posts;
+    });
+  }
+  return user;
 };
 
 signupForm.addEventListener("submit", (e) => {
@@ -292,41 +326,57 @@ const AddVote = (vote, post_id) => {
       post_id: post_id,
       vote: vote,
     }),
-  });
+  })
+    .then((data) => data.json())
+    .then((data) => {
+      if (data.msg) {
+        Toast.fire({
+          icon: "error",
+          title: data.msg,
+        });
+      }
+    });
 };
 
-const setUserLastVote = () => {
-  const scores = document.querySelectorAll(".score");
-  console.log(scores);
-  scores.forEach((s) => {
-    fetch(`/vote/${s.dataset.postid}`)
-      .then((data) => data.json())
-      .then((data) => {
-        if (data.length > 0) {
-          if (data[0].vote === 1) {
-            setArrow(s.querySelector(".up i"));
-          } else {
-            setArrow(s.querySelector(".down i"));
+const setUserLastVote = (user) => {
+  if (user) {
+    const scores = document.querySelectorAll(".score");
+    scores.forEach((s) => {
+      fetch(`/vote/${s.dataset.postid}`)
+        .then((data) => data.json())
+        .then((data) => {
+          if (data.length > 0) {
+            if (data[0].vote === 1) {
+              setArrow(s.querySelector(".up i"));
+            } else {
+              setArrow(s.querySelector(".down i"));
+            }
           }
-        }
-      });
-  });
+        });
+    });
+  }
 };
 
 const generateTopUsersList = (data) => {
   topUsersList.textContent = "";
-  data.forEach((user) => {
-    topUsersList.innerHTML += `
-    <li>
-      <img src="${
-        user.img_url ||
-        `https://ui-avatars.com/api/?name=${user.username}&background=random`
-      }" alt="">
-      <span class="red-name"> ${user.username}</span>
-      <span class="red-score">${user.count}</span>
-    </li>
+  if (data.msg) {
+    topUsersList.innerHTML = `
+    <p style="color:red;padding:1rem;text-align:center;font-wight:600 !important;">${data.msg}</p>
     `;
-  });
+  } else {
+    data.forEach((user) => {
+      topUsersList.innerHTML += `
+      <li>
+        <img src="${
+          user.img_url ||
+          `https://ui-avatars.com/api/?name=${user.username}&background=random`
+        }" alt="">
+        <span class="red-name"> ${user.username}</span>
+        <span class="red-score">${user.count}</span>
+      </li>
+      `;
+    });
+  }
 };
 
 const setDeleteBtn = (data) => {
@@ -365,5 +415,6 @@ fetch("/getLoggedUserData")
     fetch("/posts")
       .then((data) => data.json())
       .then((data) => generatePosts(data, user))
-      .then((user) => setUserLastVote());
-  });
+      .then((user) => setUserLastVote(user));
+  })
+  .catch((err) => console.log(err));
