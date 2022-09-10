@@ -43,6 +43,9 @@ const uploadMedia = (post_id) => {
           icon: "success",
           title: "Post added successfully",
         });
+        fetch("/getUserPosts")
+          .then((data) => data.json())
+          .then(generatePosts);
       } else if (data.msg) {
         loading.classList.remove("active");
         Toast.fire({
@@ -81,6 +84,9 @@ postForm.addEventListener("submit", (e) => {
             icon: "success",
             title: "Post added successfully",
           });
+          fetch("/getUserPosts")
+            .then((data) => data.json())
+            .then(generatePosts);
         }
       }
     });

@@ -9,7 +9,7 @@ const getUserPostsQ = (id) => {
       posts p 
         join users u
         on u.id =p.user_id
-         where u.id =$1`,
+         where u.id =$1 order by id desc`,
     [id]
   );
 };
