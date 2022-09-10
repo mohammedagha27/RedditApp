@@ -26,8 +26,10 @@ const reduceSize = (req, res, next) => {
       join(__dirname, "..", "..", "..", "public", "uploads", "images", imgName)
     )
     .then((result) => {
-      console.log(result);
       next();
+    })
+    .catch((err) => {
+      res.status(500).json({ msg: "Connection Error,Could not compress img." });
     });
 };
 

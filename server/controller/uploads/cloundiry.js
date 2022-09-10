@@ -32,10 +32,17 @@ const cloudUpload = (req, res, next) => {
     "images",
     imgName
   );
-  cloudinary.v2.uploader.upload(dir).then((result) => {
-    req.mediaUrl = result.url;
-    next();
-  });
+  cloudinary.v2.uploader
+    .upload(dir)
+    .then((result) => {
+      req.mediaUrl = result.url;
+      next();
+    })
+    .catch((err) => {
+      res.status(500).json({
+        msg: "Connection Error, Image hasn't been Uploaded to the cloud.",
+      });
+    });
 };
 
 module.exports = cloudUpload;
