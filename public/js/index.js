@@ -206,7 +206,7 @@ const generatePosts = (posts, user) => {
             <p>${post.content}</p>
             ${
               post.media
-                ? `<img src="/uploads/images/${post.media}"></img>`
+                ? `<img src="${post.media}"></img>`
                 : ""
             }
             </div>

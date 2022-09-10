@@ -1,8 +1,19 @@
 const { login, logout, signUp } = require("./Authentication");
-const { postNewComment, getPostComments, deleteComment } = require("./comments");
-const { searchPost, getAllPosts, deletePost, addNewPost, addNewPostMedia} = require("./posts");
-const { addVote,getLastVote,deleteVote} = require("./votes");
-const { getTopUsers} = require("./users");
+const {
+  postNewComment,
+  getPostComments,
+  deleteComment,
+} = require("./comments");
+const {
+  searchPost,
+  getAllPosts,
+  deletePost,
+  addNewPost,
+  addNewPostMedia,
+} = require("./posts");
+const { addVote, getLastVote, deleteVote } = require("./votes");
+const { getTopUsers } = require("./users");
+const { cloudUpload, localUpload, reduceSize } = require("./uploads");
 
 module.exports = {
   signUp,
@@ -19,5 +30,8 @@ module.exports = {
   getLastVote,
   deleteVote,
   getTopUsers,
-  addNewPostMedia
+  addNewPostMedia,
+  cloudUpload,
+  localUpload,
+  reduceSize,
 };
