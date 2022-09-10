@@ -18,6 +18,7 @@ const {
   notFound,
   serverError,
   unauthorized,
+  getUserPosts
 } = require("../controller");
 const { getLoggedUserData } = require("../controller/Authentication");
 const { isLogged } = require("../middlewares");
@@ -45,6 +46,7 @@ router.post(
 );
 router.get("/search", searchPost);
 router.delete("/post/:id", isLogged, deletePost);
+router.get("/getUserPosts", isLogged, getUserPosts);
 
 //votes
 router.post("/vote", isLogged, addVote);

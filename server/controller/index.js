@@ -5,6 +5,7 @@ const {
   deletePost,
   addNewPost,
   addNewPostMedia,
+  getUserPosts
 } = require("./posts");
 const { addVote, getLastVote, deleteVote } = require("./votes");
 const { getTopUsers } = require("./users");
@@ -30,4 +31,5 @@ module.exports = {
   notFound,
   serverError,
   unauthorized,
+  getUserPosts
 };
