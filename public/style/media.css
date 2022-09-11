@@ -1,0 +1,132 @@
+@media (max-width: 600px) {
+  body {
+    position: relative;
+  }
+  header {
+  }
+  header .search {
+    display: none !important;
+  }
+  header .menu-options {
+  }
+  .menu-options .menu .menu-items {
+    display: none !important;
+  }
+  .menu .btns {
+    display: flex;
+    gap: 10px;
+  }
+  .menu .btns button {
+    width: 80px !important;
+    font-size: 14px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  section.trending {
+    display: none !important;
+  }
+  .main-container {
+    width: 100% !important;
+    margin: 0 auto;
+  }
+  .main-body {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    overflow: hidden;
+  }
+  .main-body .side {
+    order: 1 !important;
+  }
+  .p-header a {
+    margin: 0 8px;
+    font-size: 12px;
+    display: flex;
+  }
+  .p-header a:nth-child(2) {
+    display: none;
+  }
+  .p-posts .p-post {
+    max-height: unset !important;
+  }
+  .p-posts .p-post .p-post-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 0 !important;
+  }
+  .p-posts .p-post .p-post-header span.post-date {
+    font-size: 12px;
+    margin-left: 24px;
+  }
+  .p-posts .p-post .p-post-content img {
+    max-width: unset;
+    width: 95% !important;
+    margin: 1rem auto;
+  }
+  .signup-popup,
+  .login-popup {
+    overflow: hidden !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  .login-popup > .login-container,
+  .signup-popup > .signup-container {
+    width: 90% !important;
+    height: 500px !important;
+  }
+  .login-popup > .login-container .login-img,
+  .signup-popup > .signup-container .signup-img {
+    width: 20% !important;
+  }
+  .login-popup > .login-container .login-content,
+  .signup-popup > .signup-container .signup-content {
+    width: 65% !important;
+    margin-left: 15px !important;
+    justify-content: center !important;
+    gap: 1rem !important;
+  }
+  .login-content form input,
+  .signup-content form input {
+    height: 40px !important;
+  }
+  .login-content form button,
+  .signup-content form button {
+    height: 38px !important;
+  }
+  #loggedUser > div.loggedUser-actions {
+    display: none !important;
+  }
+  #loggedUser > div.btns {
+    display: none;
+  }
+  #loggedUser > div.menu-items {
+    display: flex !important;
+    width: fit-content !important;
+  }
+  body > main > div > div > section.popular > div > div.p-header.add-post.active > div.add-post-icons{
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+  }
+  .profile-container{
+    width: 90% !important;
+  }
+  .profile-container form{
+   padding: 2rem 2rem 1.4rem  !important;
+   justify-content: space-between !important;
+  }
+  body > div > div.rules{
+    display: none !important;
+  }
+  #title{
+    height: 50px;
+  }
+  #content{
+    height: 200px;
+  }
+  #media{
+    height: 45px;
+  }
+
+}
